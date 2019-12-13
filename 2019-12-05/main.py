@@ -47,3 +47,4 @@ def interpret(instructions):
     return instructions
 
 print(interpret([1002, 4, 3, 4, 33]))
+
