@@ -89,9 +89,18 @@ def interpret(instructions, inputVal):
 
 for line in open('input'):
     program = [int(x) for x in line.split(',')]
-    outputA = interpret(program.copy(), [4, 0])
-    outputB = interpret(program.copy(), [3, outputA])
-    outputC = interpret(program.copy(), [2, outputB])
-    outputD = interpret(program.copy(), [1, outputC])
-    print(interpret(program.copy(), [0, outputD]))
+    maxOutput = 0
+    for inputA in [0, 1, 2, 3, 4]:
+       outputA = interpret(program.copy(), [inputA, 0])
+       for inputB in [0, 1, 2, 3, 4]:
+           outputB = interpret(program.copy(), [inputB, outputA])
+           for inputC in [0, 1, 2, 3, 4]:
+               outputC = interpret(program.copy(), [inputC, outputB])
+               for inputD in [0, 1, 2, 3, 4]:
+                   outputD = interpret(program.copy(), [inputD, outputC])
+                   for inputE in [0, 1, 2, 3, 4]:
+                       outputE = interpret(program.copy(), [inputE, outputD])
 
+                       if outputE > maxOutput:
+                           maxOutput = outputE
+    print(maxOutput) 
