@@ -3,7 +3,7 @@
 #include <cassert>
 
 int main(int argc, char** argv) {
-	bool arr[1000][1000] = {false};
+	int arr[1000][1000] = {0};
 
 	std::ifstream f(argv[1]);
 	std::string line;
@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
 
 			for(auto x = bx; x <= ux; x++) {
 				for(auto y = by; y <= uy; y++) {
-					arr[x][y] = !arr[x][y];
+					arr[x][y] += 2;
 				}
 			}
 		} else if (line.find("turn on ") == 0) {
@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
 			assert(by < uy);
 			for(auto x = bx; x <= ux; x++) {
 				for(auto y = by; y <= uy; y++) {
-					arr[x][y] = true;
+					arr[x][y] += 1;
 				}
 			}
 		} else if (line.find("turn off ") == 0) {
@@ -49,23 +49,19 @@ int main(int argc, char** argv) {
 			assert(by < uy);
 			for(auto x = bx; x <= ux; x++) {
 				for(auto y = by; y <= uy; y++) {
-					arr[x][y] = false;
+					arr[x][y] = std::max(0, arr[x][y] - 1);
 				}
 			}
 		}
 	}
 
-	auto cnt = 0;
+	auto sum = 0;
 	for(auto x = 0; x < 1000; x++) {
 		for(auto y = 0; y < 1000; y++) {
-			//std::cout << arr[x][y];
-			if(arr[x][y]) {
-				cnt++;
-			}
+			sum += arr[x][y];
 		}
-		//std::cout << std::endl;
 	}
 
-	std::cout << cnt << std::endl;
+	std::cout << sum << std::endl;
 	return 0;
 }
