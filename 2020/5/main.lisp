@@ -14,9 +14,12 @@
 										(CEILING (/ (+ (car res) (car (cdr res))) 2))
 										(car (cdr res)))))
 			  )
-		(print res)
 		)
-	res))
-
-(print (car (BSP "FBFBBFF" 127.0 #\F #\B)))
-(print (car (BSP "RLR" 7.0 #\L #\R)))
+	(car res)))
+(defun id-from-boarding-pass (boarding-pass)
+	(+ 
+	  (* 8 (BSP (subseq boarding-pass 0 7) 127.0 #\F #\B))
+	  (BSP (subseq boarding-pass 7) 7.0 #\L #\R)))
+(print (id-from-boarding-pass "FBFBBFFRLR"))
+(loop for boarding-pass in (get-file "input")
+	  do (print (id-from-boarding-pass boarding-pass)))
