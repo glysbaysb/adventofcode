@@ -9,30 +9,19 @@ int main(int argc, char** argv) {
 	auto total = 0;
 	while(std::getline(f, line)) {
 		auto totalLength = line.length();
-		auto inMemLength = 0;
-		for(auto i = 1; i < line.length() - 1; i++) {
-			if(line[i] == '\\') {
-				inMemLength++;
-
-				switch(line[i + 1]) {
-				case 'x':
-					i += 3;
-					break;
-				case '"':
-				case '\\':
-					i += 1;
-					break;
-				default:
-					std::cerr << line << "\t" << line[i] << line[i+1] << std::endl;
-					assert(false);
-				}
-				continue;
+		auto encodedLength = 2; // start and end "
+		for(auto i = 0; i < line.length(); i++) {
+			switch(line[i]) {
+			case '"':
+			case '\\':
+				encodedLength += 2;
+				break;
+			default:
+				encodedLength += 1;
 			}
-
-			inMemLength++;
 		}
 
-		total += (totalLength - inMemLength);
+		total += (encodedLength - totalLength);
 	}
 
 	std::cout << total << std::endl;
