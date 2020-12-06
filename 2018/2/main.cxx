@@ -11,13 +11,7 @@ bool countDuplicates(std::string str, int expectedForAny) {
 		count[c - 'a']++;
 	}
 
-	for(const auto c: count) {
-		if(c == expectedForAny) {
-			return true;
-		}
-	}
-
-	return false;
+	return std::find(std::begin(count), std::end(count), expectedForAny) != std::end(count);
 }
 
 int main(int argc, char** argv) {
