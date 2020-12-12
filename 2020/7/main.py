@@ -1,13 +1,7 @@
-answers = set()
-def findGolden(bags, startPoint):
-    if startPoint == 'shiny gold':
-        return 1
+def sumBags(bags, startPoint):
     count = 0
-    for color in bags[startPoint]:
-        res = findGolden(bags, color)
-        if res > 0:
-            answers.add(startPoint)
-            count += res
+    for color, number in bags[startPoint]:
+        count += number + number * sumBags(bags, color)
     return count
 
 bags = {}
@@ -18,10 +12,8 @@ for line in open('input'):
     content = []
 
     for x in range(contentCount):
-        content.append(parts[5 + x*4] + ' ' + parts[5 + x*4 + 1])
+        content.append((parts[5 + x*4] + ' ' + parts[5 + x*4 + 1],  int(parts[4 + x*4])))
 
     bags[thisBag] = content
 
-for color in bags:
-    findGolden(bags, color)
-print(len(answers))
+print(sumBags(bags, 'shiny gold'))
