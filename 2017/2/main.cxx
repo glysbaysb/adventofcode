@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
 	std::ifstream f(argv[1]);
 	std::string line;
 
-	auto checksum = 0;
+	auto total = 0;
 	while(std::getline(f, line)) {
 		std::vector<int> columns;
 		boost::tokenizer<> tok(line);
@@ -18,10 +18,19 @@ int main(int argc, char** argv) {
 				columns.push_back(std::stoi(s, &pos, 10));
 			});
 
-		const auto[min, max] = std::minmax_element(columns.begin(), columns.end());
-		checksum += (*max - *min);
+		for(auto i = 0; i < columns.size(); i++) {
+			for(auto j = 0; j < columns.size(); j++) {
+				if(i == j) { continue; } // don't try a number with itself
+
+				if(columns[i] % columns[j] == 0) {
+					total += columns[i] / columns[j];
+					break;
+				}
+			}
+		}
+
 	}
 
-	std::cout << checksum << std::endl;
+	std::cout << total << std::endl;
 }
 
