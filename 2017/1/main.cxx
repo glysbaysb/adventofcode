@@ -16,15 +16,17 @@ int main(int argc, char** argv) {
 					return (c - '0');
 				});
 
+		const int jumpLength = captcha.size() / 2;
+
 		auto sum = 0;
-		for(auto i = 0; i < captcha.size() - 1; i++) {
-			if(captcha[i] == captcha[i + 1]) {
+		for(auto i = 0; i < captcha.size(); i++) {
+			if(captcha[i] == captcha[(i + jumpLength) % captcha.size()]) {
 				sum += captcha[i];
 			}
 		}
 
-		if(captcha[captcha.size() - 1] == captcha[0]) {
-			sum += captcha[0];
+		if(captcha[captcha.size() - 1] == captcha[jumpLength]) {
+			sum += captcha[jumpLength];
 		}
 
 		std::cout << sum;
