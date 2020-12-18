@@ -108,8 +108,9 @@ class Parser(object):
 
 
 if __name__ == '__main__':
-    lexer = Lexer('2 * 3 + (4 * 5)')
-    print(Parser(lexer).parse())
-
-    lexer = Lexer('5 + (8 * 3 + 9 + 3 * 4 * 3)')
-    print(Parser(lexer).parse())
+    # part 1
+    total = 0
+    for line in open('input'):
+        lexer = Lexer(line)
+        total += Parser(lexer).parse()
+    print(total)
