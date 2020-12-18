@@ -1,36 +1,35 @@
-northSouthAxis = 0
-eastWestAxis = 0
-facing = 90
+northSouthAxisWaypoint = 1
+eastWestAxisWaypoint = 10
+
+shipNS = 0
+shipEW = 0
+
 for line in open('input'):
     action = line[0]
     val = int(line[1:])
 
     if action == 'N':
-        northSouthAxis += val
+        northSouthAxisWaypoint += val
     elif action == 'S':
-        northSouthAxis -= val
+        northSouthAxisWaypoint -= val
     elif action == 'E':
-        eastWestAxis += val
+        eastWestAxisWaypoint += val
     elif action == 'W':
-        eastWestAxis -= val
+        eastWestAxisWaypoint -= val
     elif action == 'L':
-        facing -= val
     elif action == 'R':
-        facing += val
+        if val == 90:
+            tmp = northSouthAxisWaypoint
+            northSouthAxisWaypoint = eastWestAxisWaypoint
+            eastWestAxisWaypoint = tmp
+        elif val = 270:
+            tmp = northSouthAxisWaypoint
+            northSouthAxisWaypoint = eastWestAxisWaypoint
+            eastWestAxisWaypoint = tmp
+
     elif action == 'F':
-        while facing > 360:
-            facing -= 360
-        while facing < 0:
-            facing += 360
-            
-        if facing == 0 or facing == 360:
-            northSouthAxis += val
-        elif facing == 180:
-            northSouthAxis -= val
-        elif facing == 90:
-            eastWestAxis += val
-        elif facing == 270:
-            eastWestAxis -= val
+        shipNS += val * northSouthAxisWaypoint
+        shipEW += val * eastWestAxisWaypoint
 
 
-print(northSouthAxis, eastWestAxis, abs(northSouthAxis) + abs(eastWestAxis))
+print(abs(shipNS - northSouthAxisWaypoint) + abs(shipEW - eastWestAxisWaypoint))

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include "range/v3/view/cartesian_product.hpp"
 #include <boost/tokenizer.hpp>
 
 int main(int argc, char** argv) {
@@ -18,16 +19,14 @@ int main(int argc, char** argv) {
 				columns.push_back(std::stoi(s, &pos, 10));
 			});
 
-		for(auto i = 0; i < columns.size(); i++) {
-			for(auto j = 0; j < columns.size(); j++) {
-				if(i == j) { continue; } // don't try a number with itself
-
-				if(columns[i] % columns[j] == 0) {
-					total += columns[i] / columns[j];
-					break;
-				}
-			}
-		}
+		const auto allPairs = ranges::views::cartesian_product(columns, columns);
+		/*const auto it = std::find_if(columns.begin(), columns.end(), [](const std::pair<int, int>& x) {
+					const auto[a, b] = x;
+					return a % b == 0;
+				});
+		std::cout << it << ' ' << *it << std::endl;*/
+		std::cout << allPairs[0] << std::endl;
+		//total += (it.first) / (it.second);
 
 	}
 
