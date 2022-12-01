@@ -6,9 +6,6 @@ for line in open('input'):
         continue
     elves[-1] = elves[-1] + int(line)
 
-max_elf = 0
-for elf in elves:
-    if elf > max_elf:
-        max_elf = elf
-print(max_elf)
+elves.sort(reverse=True)
+print(elves[0] + elves[1] + elves[2])
 
